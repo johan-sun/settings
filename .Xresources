@@ -1,0 +1,29 @@
+!===============================
+!
+! - Setting for xterm
+! --------------------
+
+XTerm*locale: true
+XTerm*utf8Title: true
+XTerm*fontMenu*fontdefault*Label: Default
+!XTerm*faceName:Courier 10 Pitch:antialias=True:pixelsize=14
+XTerm*faceName:Ubuntu Mono:antialias=True:pixelsize=14
+XTerm*faceNameDoublesize:文泉驿等宽正黑:antialias=True:pixelsize=14
+!XTerm*faceSize:12
+!XTerm*faceSize1:12
+!XTerm*faceSize2:12
+!XTerm*faceSize3:12 
+!XTerm*faceSize4:12 
+!XTerm*faceSize5:12 
+!XTerm*faceSize6:12 
+
+XTerm.cjkWidth:true
+XTerm*background:black
+XTerm*foreground:#999999
+XTerm*scrollBar:false
+!XTerm*rightScrollBar: true
+!XTerm*jumpScroll:  true
+XTerm*SaveLines: 1000
+!----------------------
+!- End of setting Xterm
+!=========================

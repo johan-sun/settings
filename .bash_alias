@@ -1,0 +1,22 @@
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias l='ls -CFG'
+alias la='ls -AG'
+alias ll='ls -alFG'
+alias ls='ls -G'
+alias mkcscope='find `pwd` -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files && cscope -bkq -i cscope.files'
+alias rm='rm -i -v'
+alias blogupdate="([ -d _site ] || (echo 'update at top dir' && false)) && ( jekyll build && git push && cd _site && git add -A && git commit -m 'auto build @ `date`' && git push && cd .. )"
+
+function blognew
+{
+	local file=`date +"%Y-%m-%d-$@"`
+	touch $file
+	printf "---\nlayout : article\ntitle :\ncategory :\ntag :\n---\n" > $file
+}
+
+function  mkctags
+{
+	ctags -R -I __THROW -I __THROWNL -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+px --fields=+ialS --extra=+q --sort=yes $*
+}
