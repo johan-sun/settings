@@ -22,6 +22,7 @@ Bundle 'scrooloose/syntastic'
 "Bundle 'clang-complete'
 Bundle 'Conque-Shell'
 Bundle 'pydave/vim-man'
+Bundle 'Auto-Pairs'
 filetype on "required 
 "------------end of vundle manager plugin ---------
 
@@ -34,7 +35,7 @@ set cindent
 set tabstop=4
 set shiftwidth=4
 set smartindent
-set expandtab
+"set expandtab
 set fileencodings=utf8,gbk
 set ignorecase
 au FileType make set noexpandtab
@@ -53,6 +54,8 @@ map <F2> :tabprevious <CR>
 map <F3> :tabnext <CR>
 imap <F2> <Esc>:tabprevious<CR>
 imap <F3> <Esc>:tabnext<CR>
+map <c-h> :shell<CR>
+imap <c-h> <Esc>:shell<CR>
 "----------------end add tags--------------------
 
 
@@ -68,9 +71,9 @@ if has("gui_running")
 	"set guifont=文泉驿等宽微米黑\ 10
 	colorscheme torte
 	set transparency=20
-	set noimd
-	au WinEnter * if &filetype == 'conque_term' | set imd | else | set noimd | endif
-	au FileType conque_term set imd
+	"set noimd
+	"au WinEnter * if &filetype == 'conque_term' | set imd | else | set noimd | endif
+	"au FileType conque_term set imd
 	"highlight StatusLine guifg=Black guibg=Gray
 endif
 "----------------end gui settings -------------------
@@ -84,6 +87,7 @@ let g:Tlist_Sort_Type="name"
 let g:Tlist_Process_File_Always=1
 let g:Tlist_Auto_Highlight_Tag=1
 let g:Tlist_Ctags_Cmd = '/usr/local/opt/ctags/bin/ctags'
+let g:Tlist_Show_One_File = 1
 "let g:Tlist_Display_Prototype=1
 "-------------end taglist setting-----------------  
 
@@ -112,6 +116,9 @@ let g:completekey = '<C-c>'
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<A-Space>'
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+au FileType c,cpp map <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+au FileType c,cpp imap <C-]> <ESC>:YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "----------------ComquTerm--------------
 let g:ConqueTerm_Color = 2
@@ -132,6 +139,7 @@ endfunction
 "处理自动关闭预览窗口与vundle使用的段错误冲突
 autocmd BufCreate *vundle* let g:vundle_open=1
 autocmd BufDelete *vundle* let g:vundle_open=0
-autocmd BufWrite,BufLeave * call ScratchClose() 
+"autocmd BufWrite,BufLeave * call ScratchClose() 
+autocmd BufWrite * call ScratchClose() 
 imap <C-l> <Esc>:call ScratchClose()<CR>a
 map <C-l> :call ScratchClose()<CR>
