@@ -14,7 +14,7 @@ Bundle 'gmarik/vundle'
 "Bundle 'echofunc.vim'
 "Bundle 'neocomplcache'
 Bundle 'taglist.vim'
-Bundle 'a.vim' 
+Bundle 'a.vim'
 "Bundle 'OmniCppComplete' 
 Bundle 'code_complete'
 Bundle 'Valloric/YouCompleteMe' 
@@ -23,6 +23,9 @@ Bundle 'scrooloose/syntastic'
 Bundle 'Conque-Shell'
 Bundle 'pydave/vim-man'
 Bundle 'Auto-Pairs'
+"for mac dash
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
 filetype on "required 
 "------------end of vundle manager plugin ---------
 
@@ -34,8 +37,9 @@ set nu
 set cindent
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set smartindent
-"set expandtab
+set expandtab
 set fileencodings=utf8,gbk
 set ignorecase
 au FileType make set noexpandtab
