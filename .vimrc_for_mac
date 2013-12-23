@@ -22,7 +22,7 @@ Bundle 'scrooloose/syntastic'
 "Bundle 'clang-complete'
 Bundle 'Conque-Shell'
 Bundle 'pydave/vim-man'
-Bundle 'Auto-Pairs'
+"Bundle 'Auto-Pairs'
 "for mac dash
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
@@ -75,9 +75,9 @@ if has("gui_running")
 	"set guifont=文泉驿等宽微米黑\ 10
 	colorscheme torte
 	set transparency=20
-	"set noimd
-	"au WinEnter * if &filetype == 'conque_term' | set imd | else | set noimd | endif
-	"au FileType conque_term set imd
+	set noimd
+	au WinEnter * if &filetype == 'conque_term' | set imd | else | set noimd | endif
+	au FileType conque_term set imd
 	"highlight StatusLine guifg=Black guibg=Gray
 endif
 "----------------end gui settings -------------------
