@@ -61,7 +61,7 @@ flags = [
 #'LANG',]
 ]
 
-comHeaders = [
+commHeaders = [
 '-isystem',
 '/usr/local/include',
 '-isystem',
@@ -185,12 +185,9 @@ def FlagsForFile( filename, **kwargs ):
 
 
   if IsHeaderFile(filename) or IsCppSourceFile(filename):
-    final_flags.extend(['-std='+CXXversion, '-x','c++'] + comHeaders + cppHeaders);
+    final_flags.extend(['-std='+CXXversion, '-x','c++'] + commHeaders + cppHeaders);
   elif IsCSourceFile(filename):
-    final_flags.extend(['-std='+Cversion, '-x','c'] + comHeaders)
-  f = open('/dev/ttys002', 'w')
-  print >> f, final_flags
-  f.close()
+    final_flags.extend(['-std='+Cversion, '-x','c'] + commHeaders)
   return {
     'flags': final_flags,
     'do_cache': True
