@@ -1,3 +1,8 @@
+#-I CL_API_SUFFIX__VERSION_1_0 for opencl function
+opencl_ignore="-I CL_API_SUFFIX__VERSION_1_0"
+cuda_ctag_ignore="-I __host__ -I __global__ -I __device__ -I CUDARTAPI"
+alias mksystags='mkctags -f ~/.vim/tags/systags /usr/include /usr/local/include '
+
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
@@ -7,6 +12,7 @@ alias ll='ls -alFG'
 alias ls='ls -G'
 alias mkcscope='find `pwd` -name "*.h" -o -name "*.c" -o -name "*.cpp" > cscope.files && cscope -bkq -i cscope.files'
 alias rm='rm -i -v'
+
 alias blogupdate="([ -d _site ] || (echo 'update at top dir' && false)) && ( jekyll build && git push && cd _site && git add -A && git commit -m 'auto build @ `date`' && git push && cd .. )"
 
 function blognew
