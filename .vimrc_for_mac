@@ -90,7 +90,7 @@ let g:Tlist_Use_Right_Window=1 "靠右
 let g:Tlist_Sort_Type="name"
 let g:Tlist_Process_File_Always=1
 let g:Tlist_Auto_Highlight_Tag=1
-let g:Tlist_Ctags_Cmd = '/usr/local/opt/ctags/bin/ctags'
+let g:Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 let g:Tlist_Show_One_File = 1
 "let g:Tlist_Display_Prototype=1
 "-------------end taglist setting-----------------  
@@ -121,9 +121,7 @@ let g:completekey = '<C-c>'
 let g:ycm_key_invoke_completion = '<A-Space>'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-au FileType c,cpp map <C-]> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-au FileType c,cpp imap <C-]> <ESC>:YcmCompleter GoToDefinitionElseDeclaration<CR>
-
+au FileType c,cpp map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "----------------ComquTerm--------------
 let g:ConqueTerm_Color = 2
 let g:ConqueTerm_CloseOnEnd = 1

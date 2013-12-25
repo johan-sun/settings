@@ -3,10 +3,14 @@ export HOMEBREW_GITHUB_API_TOKEN=43931fe91d77d58335368ef6cc187235c0caf468
 export HOMEBREW_EDITOR=vim
 
 export PATH=/usr/local/bin:/usr/local/sbin:`echo $PATH | sed -E 's/\/usr\/local\/s?bin:?//'`
+
 #alias
-if [ -f ~/.bash_alias ]
-then 
-source ~/.bash_alias
+if [ -f $HOME/.bash_aliases ]; then 
+source $HOME/.bash_aliases
+fi
+
+if [ -f $HOME/.cmd_aliases ]; then
+source $HOME/.cmd_aliases
 fi
 
 fpath=(/usr/local/share/zsh-completions $fpath)
