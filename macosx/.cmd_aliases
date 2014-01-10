@@ -1,7 +1,6 @@
 #-I CL_API_SUFFIX__VERSION_1_0 for opencl function
 opencl_ignore="-I CL_API_SUFFIX__VERSION_1_0"
 cuda_ctag_ignore="-I __host__ -I __global__ -I __device__ -I CUDARTAPI"
-alias mksystags='mkctags -f ~/.vim/tags/systags /usr/include /usr/local/include '
 
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -24,5 +23,5 @@ function blognew
 
 function  mkctags
 {
-	ctags -R -I __THROW -I __THROWNL -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+px --fields=+ialS --extra=+q --sort=yes $*
+	ctags -I __THROW -I __THROWNL -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+px --fields=+ialS --extra=+q --sort=yes $*
 }
