@@ -107,10 +107,16 @@ map <F7> :cs add . ../.<CR>
 "let g:completekey = '<C-c>'
 "---------------------------------
 
+"---------------syntastic----------------
+let g:syntastic_error_symbol = '✗'
+let g:syntastic_warning_symbol = '⚠'
+
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<C-l>'
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 
 set laststatus=2
 set statusline=%<%F%m%r%w\ fmt=%{&ff}:%{&fenc!=''?&fenc:&enc},type=%Y,ascii=\%b(\%B)%=%v,%l\ of\ %L\ %P
