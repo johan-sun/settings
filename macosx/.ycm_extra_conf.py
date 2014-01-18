@@ -62,6 +62,8 @@ flags = [
 ]
 
 commHeaders = [
+'-I',
+'.',
 '-isystem',
 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.0/include',
 '-isystem',
@@ -183,11 +185,11 @@ def FlagsForFile( filename, **kwargs ):
     relative_to = DirectoryOfThisScript()
     final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
 
-
   if IsHeaderFile(filename) or IsCppSourceFile(filename):
     final_flags.extend(['-std='+CXXversion, '-x','c++'] + commHeaders + cppHeaders);
   elif IsCSourceFile(filename):
     final_flags.extend(['-std='+Cversion, '-x','c'] + commHeaders)
+
   return {
     'flags': final_flags,
     'do_cache': True

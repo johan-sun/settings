@@ -10,22 +10,20 @@ call vundle#rc()
 " 使用Vundle管理插件
 Bundle 'gmarik/vundle'
 " 接下来是安装的插件
-"taglist from vim-script
-"Bundle 'echofunc.vim'
-"Bundle 'neocomplcache'
 Bundle 'taglist.vim'
 Bundle 'a.vim'
-"Bundle 'OmniCppComplete' 
 Bundle 'code_complete'
 Bundle 'Valloric/YouCompleteMe' 
-Bundle 'scrooloose/syntastic' 
-"Bundle 'clang-complete'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 Bundle 'Conque-Shell'
 Bundle 'pydave/vim-man'
 "Bundle 'Auto-Pairs'
 "for mac dash
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
+Bundle 'pythoncomplete'
+Bundle 'Yggdroot/indentLine'
 filetype on "required 
 "------------end of vundle manager plugin ---------
 
@@ -127,13 +125,20 @@ au FileType c,cpp map<C-a> :A<CR>
 "---------------syntastic----------------
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_auto_jump = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_aggregate_errors = 1
 
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<A-Space>'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_always_populate_location_list = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
+"let g:ycm_enable_diagnostic_signs = 0 "左边一竖条错误指示
+"let g:ycm_echo_current_diagnostic = 0 "显示诊断信息
+
 au FileType c,cpp map <C-\> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "----------------ComquTerm--------------
 let g:ConqueTerm_Color = 2
@@ -158,3 +163,6 @@ autocmd BufDelete *vundle* let g:vundle_open=0
 autocmd BufWrite * call ScratchClose() 
 imap <C-l> <Esc>:call ScratchClose()<CR>a
 map <C-l> :call ScratchClose()<CR>
+
+"-------------IndentLine--------------------
+let g:indentLine_char = '┊'
