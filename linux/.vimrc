@@ -12,16 +12,16 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 " 接下来是安装的插件
 "taglist from vim-script
-"Bundle 'echofunc.vim'
-"Bundle 'neocomplcache'
 Bundle 'taglist.vim'
 Bundle 'a.vim' 
-"Bundle 'OmniCppComplete' 
 Bundle 'code_complete'
 Bundle 'Valloric/YouCompleteMe' 
-Bundle 'scrooloose/syntastic' 
-"Bundle 'clang-complete'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 Bundle 'Conque-Shell'
+Bundle 'Yggdroot/indentLine'
+Bundle 'pydave/vim-man'
+
 filetype on "required 
 "------------end of vundle manager plugin ---------
 
@@ -112,7 +112,7 @@ let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
 
 "----------------YouCompleteMe-----------
-let g:ycm_key_invoke_completion = '<C-l>'
+let g:ycm_key_invoke_completion = '<C-j>'
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
@@ -138,3 +138,6 @@ map <C-x> :call ScratchClose()<CR>
 
 "map <C-y> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <C-\> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"-------------IndentLine--------------------
+let g:indentLine_char = '┊'
