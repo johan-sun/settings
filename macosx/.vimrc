@@ -18,11 +18,11 @@ Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
 Bundle 'Conque-Shell'
 Bundle 'pydave/vim-man'
-"Bundle 'Auto-Pairs'
+Bundle 'Auto-Pairs'
 "for mac dash
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
-Bundle 'pythoncomplete'
+"Bundle 'pythoncomplete'
 Bundle 'Yggdroot/indentLine'
 filetype on "required 
 "------------end of vundle manager plugin ---------
@@ -33,10 +33,10 @@ filetype on "required
 "-----------begin basic config of vim------------
 set nu
 set cindent
+set smartindent
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-set smartindent
 set expandtab
 set fileencodings=utf8,gbk
 set ignorecase
@@ -138,31 +138,22 @@ let g:ycm_always_populate_location_list = 1
 "let g:ycm_collect_identifiers_from_tags_files = 1
 "let g:ycm_enable_diagnostic_signs = 0 "左边一竖条错误指示
 "let g:ycm_echo_current_diagnostic = 0 "显示诊断信息
-
 au FileType c,cpp map <C-\> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd BufWrite * pclose
+imap <C-l> <Esc>:pclose<CR>a
+map <C-l> :pclose<CR>
+
 "----------------ComquTerm--------------
 let g:ConqueTerm_Color = 2
 let g:ConqueTerm_CloseOnEnd = 1
 let g:ConqueTerm_StartMessages = 0
 
+"----------statusline-------------------
 set laststatus=2
 set statusline=%<%F%m%r%w\ fmt=%{&ff}:%{&fenc!=''?&fenc:&enc},type=%Y,ascii=\%b(\%B)%=%v,%l\ of\ %L\ %P
 
-autocmd FileType taglist,vundle setlocal statusline=%F
-
-let g:vundle_open=0
-function ScratchClose()
-	if pumvisible() == 0 && !g:vundle_open 
-		silent! pclose
-	endif
-endfunction
-"处理自动关闭预览窗口与vundle使用的段错误冲突
-autocmd BufCreate *vundle* let g:vundle_open=1
-autocmd BufDelete *vundle* let g:vundle_open=0
-"autocmd BufWrite,BufLeave * call ScratchClose() 
-autocmd BufWrite * call ScratchClose() 
-imap <C-l> <Esc>:call ScratchClose()<CR>a
-map <C-l> :call ScratchClose()<CR>
 
 "-------------IndentLine--------------------
 let g:indentLine_char = '┊'
+
+let g:syntastic_cpp_compiler = '-std=c++11'
