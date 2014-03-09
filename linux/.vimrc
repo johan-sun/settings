@@ -15,12 +15,13 @@ Bundle 'gmarik/vundle'
 Bundle 'taglist.vim'
 Bundle 'a.vim' 
 Bundle 'code_complete'
+Bundle 'scrooloose/syntastic'
 Bundle 'Valloric/YouCompleteMe' 
 Bundle 'Valloric/ListToggle'
-Bundle 'scrooloose/syntastic'
 Bundle 'Conque-Shell'
 Bundle 'Yggdroot/indentLine'
 Bundle 'pydave/vim-man'
+Bundle 'Auto-Pairs'
 
 filetype on "required 
 "------------end of vundle manager plugin ---------
@@ -34,7 +35,7 @@ set cindent
 set tabstop=4
 set shiftwidth=4
 set smartindent
-set noexpandtab
+set expandtab
 set fileencodings=utf8,gbk
 "-----------end basic config of vim------------
 
@@ -48,6 +49,8 @@ set tags+=~/.vim/tags/systags/tags
 "autocmd FileType cpp set tags+=~/.vim/tags/qt4
 "set tags+=~/.vim/tags/gl
 "set tags+=~/.vim/tags/moduletags
+autocmd FileType python set nocindent
+autocmd FileType make set noexpandtab
 cs add .
 set autochdir
 map <F2> :tabprevious <CR>
@@ -82,6 +85,7 @@ let g:Tlist_Use_Right_Window=1 "靠右
 let g:Tlist_Sort_Type="name"
 let g:Tlist_Process_File_Always=1
 let g:Tlist_Auto_Highlight_Tag=1
+let g:Tlist_Show_One_File = 1
 "let g:Tlist_Ctags_Cmd = '/usr/local/opt/ctags/bin/ctags' "let g:Tlist_Display_Prototype=1
 "-------------end taglist setting-----------------  
 
@@ -110,34 +114,29 @@ map <F7> :cs add . ../.<CR>
 "---------------syntastic----------------
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
+let g:syntastic_always_populate_location_list = 1
+let g:syntastic_aggregate_errors = 1
+"autocmd FileType c,cpp 
+let syntastic_mode_map = {'passive_filetypes' : ['c', 'cpp']}
 
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<C-j>'
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_always_populate_location_list = 1
+let g:ycm_error_symbol = '✗'
+let g:ycm_warning_symbol = '⚠'
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 
-set laststatus=2
-set statusline=%<%F%m%r%w\ fmt=%{&ff}:%{&fenc!=''?&fenc:&enc},type=%Y,ascii=\%b(\%B)%=%v,%l\ of\ %L\ %P
-
-autocmd FileType taglist,vundle setlocal statusline=%F
-
-let g:vundle_open=0
-function ScratchClose()
-	if pumvisible() == 0 && !g:vundle_open 
-		silent! pclose
-	endif
-endfunction
-"处理自动关闭预览窗口与vundle使用的段错误冲突
-autocmd BufCreate *[Vundle]* let g:vundle_open=1
-autocmd BufDelete *[Vundle]* let g:vundle_open=0
-autocmd BufWrite,BufLeave * call ScratchClose() 
-imap <C-x> <Esc>:call ScratchClose()<CR>a
-map <C-x> :call ScratchClose()<CR>
-
-"map <C-y> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd BufWrite * pclose 
+imap <C-l> <Esc>:pclose<CR>a
+map <C-l> :pclose<CR>
 map <C-\> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+"-----------statusline--------------
+set laststatus=2
+set statusline=%<%F%m%r%w\ fmt=%{&ff}:%{&fenc!=''?&fenc:&enc},type=%Y,ascii=\%b(\%B)%=%v,%l\ of\ %L\ %P
+autocmd FileType taglist,vundle setlocal statusline=%F
+
 "-------------IndentLine--------------------
-let g:indentLine_char = '┊'
+let g:indentLine_char = '꤯'
