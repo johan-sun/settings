@@ -41,7 +41,6 @@ import re
 # 'flags' list of compilation flags. Notice that YCM itself uses that approach.
 compilation_database_folder = ''
 
-
 # compile flags dict
 # key flags:will add into the compiler cflags, its value is a comile_flags_dict or list or tuple or str
 # key extension(<extensions list divie by |):  when the file extension in the list, the value will add into flags
@@ -128,7 +127,12 @@ def compile_flags_parser(compile_item, fileextension):
     return retlist
 
 
+def DirectoryOfThisScript():
+  return os.path.dirname( os.path.abspath( __file__ ) )
+
 if compilation_database_folder:
+  if not compilation_database_folder.startswith('/'):
+    compilation_database_folder = os.path.join( DirectoryOfThisScript(), compilation_database_folder )
   database = ycm_core.CompilationDatabase( compilation_database_folder )
 else:
   database = None
@@ -138,12 +142,8 @@ SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 def IsHeaderFile( filename ):
   extension = os.path.splitext( filename )[ 1 ]
   return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
+
 ##########################################################
-
-def DirectoryOfThisScript():
-  return os.path.dirname( os.path.abspath( __file__ ) )
-
-
 def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
   if not working_directory:
     return list( flags )
