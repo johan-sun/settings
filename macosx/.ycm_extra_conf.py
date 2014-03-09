@@ -30,62 +30,7 @@
 
 import os
 import ycm_core
-
-# These are the compilation flags that will be used in case there's no
-# compilation database set (by default, one is not set).
-# CHANGE THIS LIST OF FLAGS. YES, THIS IS THE DROID YOU HAVE BEEN LOOKING FOR.
-flags = [
-'-Wall',
-'-Wextra',
-#'-Werror',
-#'-Wc++98-compat',
-#'-Wno-long-long',
-'-Wno-variadic-macros',
-'-fexceptions',
-'-DNDEBUG',
-# You 100% do NOT need -DUSE_CLANG_COMPLETER in your flags; only the YCM
-# source code needs it.
-#'-DUSE_CLANG_COMPLETER',
-# THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which
-# language to use when compiling headers. So it will guess. Badly. So C++
-# headers will be compiled as C headers. You don't want that so ALWAYS specify
-# a "-std=<something>".
-# For a C project, you would set this to something like 'c99' instead of
-# 'c++11'.
-#'-std=LANG',
-# ...and the same thing goes for the magic -x option which specifies the
-# language that the files to be compiled are written in. This is mostly
-# relevant for c++ headers.
-# For a C project, you would set this to 'c' instead of 'c++'.
-#'-x',
-#'LANG',]
-]
-
-commHeaders = [
-'-I',
-'.',
-'-isystem',
-'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.0/include',
-'-isystem',
-'/usr/include',
-'-isystem',
-'/usr/local/include',
-'-isystem',
-'/usr/local/opt/python/Frameworks/Python.framework/Headers',
-]
-
-cppHeaders = [
-'-isystem',
-'/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',#c++11
-]
-
-objcHeaders = [
-'-isystem',
-'/System/Library/Frameworks',
-]
-
-CXXversion = 'c++11'
-Cversion = 'gnu11'
+import re
 
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
@@ -96,6 +41,93 @@ Cversion = 'gnu11'
 # 'flags' list of compilation flags. Notice that YCM itself uses that approach.
 compilation_database_folder = ''
 
+
+# compile flags dict
+# key flags:will add into the compiler cflags, its value is a comile_flags_dict or list or tuple or str
+# key extension(<extensions list divie by |):  when the file extension in the list, the value will add into flags
+# key command: first will execute the command, then split the out put by space and add them into flags
+compile_flags_dict = {
+'flags':[ #str, tuple, list, dict
+    '-Wall',
+    '-Wextra',
+    #'-Werror',
+    #'-Wc++98-compat',
+    #'-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
+    '-DNDEBUG',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.0/include',
+    '-isystem',
+    '/usr/include',
+    '-isystem',
+    '/usr/local/include',
+],
+'extension(.c|.cc)':[ #list tuple or dict
+    '-std=gnu99',
+    '-x',
+    'c',
+    ],
+'extension(.cpp|.cxx|.h|.hpp|.hh|.hxx)':[
+    '-std=gnu++11',
+    '-x',
+    'c++',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',#c++11
+    ],
+'command':#str tuple, list
+    [
+    'python-config --cflags',
+    ]
+
+}
+
+def compile_flags_parser(compile_item, fileextension):
+    retlist = []
+    def flagsFromCmd(cmds):
+        cmdstr = []
+        if isinstance(cmds, str):
+            cmds = [cmds,]
+
+        for cmd in cmds:
+            f = os.popen(cmd, 'r')
+            if f:
+                for line in f.readlines():
+                #if there is space in the path may cause some problem, but most file with no space
+                    cmdstr.extend(line.strip('\n').split(' ')) 
+                f.close()
+        return cmdstr
+
+    if isinstance(compile_item, str):
+        retlist.append(compile_item)
+    elif isinstance(compile_item, list) or isinstance(compile_item, tuple):
+        for it in compile_item:
+            retlist.extend( compile_flags_parser(it, fileextension))
+    elif isinstance(compile_item, dict):
+        flags = compile_item.get('flags', None)#make flags in the front
+        if flags:
+            retlist.extend(compile_flags_parser(flags, fileextension))
+        for key, it in compile_item.iteritems():
+            if key == 'flags':
+                continue
+            elif key.startswith('extension'):
+                extensions = re.search('extensions?\((.*)\)',key)
+                if extensions:
+                    extensions = extensions.group(1).split('|')
+                    if fileextension in extensions:
+                        retlist.extend(compile_flags_parser(it, fileextension))
+                else:
+                    raise ValueError('extension key must be like "extension(.h|.c|.cpp)"')
+            elif key == 'command':
+                if isinstance(it, str) or isinstance(it, list) or isinstance(it, tuple):
+                    retlist.extend(flagsFromCmd(it))
+                else:
+                    raise ValueError('command value must be tuple,str or list')
+            else:
+                raise ValueError('unsupport flag key, only support "flags, command, extension"')
+    return retlist
+
+
 if compilation_database_folder:
   database = ycm_core.CompilationDatabase( compilation_database_folder )
 else:
@@ -103,27 +135,9 @@ else:
 
 SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
 
-CPP_SOURCE_EXTENSIONS = ['.cpp', '.cxx']
-C_SOURCE_EXTENSIONS = ['.c','.cc']
-def IsObjcSource(filename):
-  extension = os.path.splitext( filename)[ 1 ]
-  return extension == '.m'
-
-def IsObjcxxSource( filename):
-  extension = os.path.splitext( filename)[ 1]
-  return extension == '.mm'
-
 def IsHeaderFile( filename ):
   extension = os.path.splitext( filename )[ 1 ]
   return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
-
-def IsCppSourceFile(filename):
-  extension = os.path.splitext( filename)[1]
-  return extension in CPP_SOURCE_EXTENSIONS
-
-def IsCSourceFile(filename):
-  extension = os.path.splitext( filename)[1]
-  return extension in C_SOURCE_EXTENSIONS
 ##########################################################
 
 def DirectoryOfThisScript():
@@ -198,17 +212,10 @@ def FlagsForFile( filename, **kwargs ):
 	#  pass
   else:
     relative_to = DirectoryOfThisScript()
-    final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
-
-  if IsHeaderFile(filename) or IsCppSourceFile(filename):
-    final_flags.extend(['-std='+CXXversion, '-x','c++'] + commHeaders + cppHeaders);
-  elif IsCSourceFile(filename):
-    final_flags.extend(['-std='+Cversion, '-x','c'] + commHeaders)
-  elif IsObjcSource(filename):
-    final_flags.extend(['-x','objective-c'] + commHeaders + objcHeaders)
-  elif IsObjcxxSource(filename):
-    final_flags.extend(['-x', 'objective-c++'] + commHeaders + objcHeaders + cppHeaders)
-
+    extension = os.path.splitext( filename )[ 1 ]
+    raw_flags = compile_flags_parser(compile_flags_dict, extension)
+    final_flags = MakeRelativePathsInFlagsAbsolute( raw_flags, relative_to )
+    
   return {
     'flags': final_flags,
     'do_cache': True

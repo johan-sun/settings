@@ -52,6 +52,7 @@ set tags+=~/.vim/tags/usr_include_except_cpp
 "set tags+=~/.vim/tags/glib2
 "set tags+=~/.vim/tags/gio_unix
 autocmd FileType cpp set tags+=~/.vim/tags/stdcpp
+autocmd FileType python set nocindent
 cs add .
 set autochdir
 map <F2> :tabprevious <CR>
@@ -96,26 +97,9 @@ let g:Tlist_Show_One_File = 1
 "-------------end taglist setting-----------------  
 
 
-""-----------build tags of your own project with Ctrl-F12------------
-"map <F12> :!ctags -R -I "__THROW" --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q . <CR>
-"map <F12> :!ctags -R -I __THROW -I __THROWNL -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+px --fields=+iaS --extra=+q --sort=yes . <CR>
 map <F6> :!mkctags . <CR>
 map <F7> :cs add . ../.<CR>
-"--------------------------end----------------------------------
 
-" automatically open and close the popup menu / preview window
-"au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-
-""----------------begin auto make----------------------
-"set makeprg=make\ %<
-"map <F5> :w <CR>:make<CR>
-""map <F5> :w <CR>:!gcc % -o  %< -g -lm<CR>
-"map <F6> :!./%<<CR>
-""--------------end auto make ------------------------
-
-"---------------code_complete-----
-"let g:completekey = '<C-c>'
-"---------------------------------
 
 "----------------A.vim
 au FileType c,cpp map<C-a> :A<CR>
@@ -125,9 +109,11 @@ au FileType c,cpp map<C-a> :A<CR>
 "---------------syntastic----------------
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_auto_jump = 1
-let g:syntastic_auto_loc_list = 1
+"let g:syntastic_auto_jump = 1
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_location_list = 1
 let g:syntastic_aggregate_errors = 1
+let g:syntastic_mode_map = {'passive_filetypes' : ['c','cpp']}
 
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<A-Space>'
@@ -135,6 +121,8 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_always_populate_location_list = 1
+let g:ycm_error_symbol = '✗'
+let g:ycm_warning_symbol = '⚠'
 "let g:ycm_collect_identifiers_from_tags_files = 1
 "let g:ycm_enable_diagnostic_signs = 0 "左边一竖条错误指示
 "let g:ycm_echo_current_diagnostic = 0 "显示诊断信息

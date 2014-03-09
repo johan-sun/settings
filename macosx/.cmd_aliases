@@ -14,7 +14,7 @@ alias rm='rm -i -v'
 
 alias blogupdate="([ -d _site ] || (echo 'update at top dir' && false)) && ( jekyll build && git push && cd _site && git add -A && git commit -m 'auto build @ `date`' && git push && cd .. )"
 
-alias qmake="/usr/local/opt/qt5/bin/qmake"
+#alias qmake="/usr/local/opt/qt5/bin/qmake"
 
 function blognew
 {
