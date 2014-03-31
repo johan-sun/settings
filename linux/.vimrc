@@ -12,7 +12,7 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 " 接下来是安装的插件
 "taglist from vim-script
-Bundle 'taglist.vim'
+Bundle 'syhkiller/taglist.vim'
 Bundle 'a.vim' 
 Bundle 'code_complete'
 Bundle 'scrooloose/syntastic'
@@ -26,7 +26,7 @@ Bundle 'Auto-Pairs'
 filetype on "required 
 "------------end of vundle manager plugin ---------
 
-"set foldmethod=syntax
+set foldmethod=manual
 
 
 "-----------begin basic config of vim------------
@@ -37,6 +37,8 @@ set shiftwidth=4
 set smartindent
 set expandtab
 set fileencodings=utf8,gbk
+autocmd FileType python,cmake set nocindent
+autocmd FileType make set noexpandtab
 "-----------end basic config of vim------------
 
 "---------------begin add ctags------------------
@@ -49,8 +51,6 @@ set tags+=~/.vim/tags/systags/tags
 "autocmd FileType cpp set tags+=~/.vim/tags/qt4
 "set tags+=~/.vim/tags/gl
 "set tags+=~/.vim/tags/moduletags
-autocmd FileType python set nocindent
-autocmd FileType make set noexpandtab
 cs add .
 set autochdir
 map <F2> :tabprevious <CR>
@@ -86,7 +86,8 @@ let g:Tlist_Sort_Type="name"
 let g:Tlist_Process_File_Always=1
 let g:Tlist_Auto_Highlight_Tag=1
 let g:Tlist_Show_One_File = 1
-"let g:Tlist_Ctags_Cmd = '/usr/local/opt/ctags/bin/ctags' "let g:Tlist_Display_Prototype=1
+"let g:Tlist_Ctags_Cmd = '/usr/local/opt/ctags/bin/ctags' 
+"let g:Tlist_Display_Prototype=1
 "-------------end taglist setting-----------------  
 
 
@@ -114,10 +115,10 @@ map <F7> :cs add . ../.<CR>
 "---------------syntastic----------------
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_always_populate_location_list = 1
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_aggregate_errors = 1
 "autocmd FileType c,cpp 
-let syntastic_mode_map = {'passive_filetypes' : ['c', 'cpp']}
+let syntastic_mode_map = {'passive_filetypes' : ['c', 'cpp','asm']}
 
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<C-j>'
@@ -140,3 +141,24 @@ autocmd FileType taglist,vundle setlocal statusline=%F
 
 "-------------IndentLine--------------------
 let g:indentLine_char = '꤯'
+
+
+if has("cscope")
+    set csto=0
+    set cst
+endif
+
+
+map <leader><leader>c :cs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>d :cs f d <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>e :cs f e <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>f :cs f f <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>g :cs f g <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>s :cs f s <C-R>=expand("<cword>")<CR><CR>
+
+map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sd :scs f d <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>se :scs f e <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sf :scs f f <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sg :scs f g <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>ss :scs f s <C-R>=expand("<cword>")<CR><CR>

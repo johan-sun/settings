@@ -55,9 +55,14 @@ compile_flags_dict = {
     #'-Wno-long-long',
     '-Wno-variadic-macros',
     '-fexceptions',
-    '-I/usr/include',
-    '-I/usr/local/include',
     '-DNDEBUG',
+    '-D__STRICT_ANSI__',
+    '-I',
+    '/usr/local/include',
+    '-I',
+    '/usr/include/x86_64-linux-gnu',
+    '-I',
+    '/usr/include',
    ],
 'extension(.c|.cc)':[ #list tuple or dict
     '-std=gnu99',
@@ -68,14 +73,16 @@ compile_flags_dict = {
     '-std=gnu++11',
     '-x',
     'c++',
-    '-isystem',
+    '-I',
     '/usr/include/c++/4.8',
+    '-I',
+    '/usr/include/c++/4.8/backward',
     ],
 'command':#str tuple, list
     [
-    'python-config --cflags',
-    'pkg-config --cflags gtk-3.0'
-    'pkg-config --cflags ncurses',
+    #'python-config --cflags',
+    #'pkg-config --cflags gtk-3.0'
+    #'pkg-config --cflags ncurses',
     ]
 
 }
@@ -92,7 +99,8 @@ def compile_flags_parser(compile_item, fileextension):
             if f:
                 for line in f.readlines():
                 #if there is space in the path may cause some problem, but most file with no space
-                    cmdstr.extend(line.strip('\n').split(' ')) 
+                    cmdstr.extend([ cmd.strip(' ') if i == 0 else '-'+cmd.strip(' ') \
+                        for i, cmd in enumerate(line.strip(' \n').split(' -'))])
                 f.close()
         return cmdstr
 
@@ -203,9 +211,6 @@ def FlagsForFile( filename, **kwargs ):
   else:
     relative_to = DirectoryOfThisScript()
     raw_flags = compile_flags_parser(compile_flags_dict, os.path.splitext(filename)[1])
-    f = open('/dev/pts/10','w')
-    print>>f, raw_flags
-    f.close()
     final_flags = MakeRelativePathsInFlagsAbsolute( raw_flags, relative_to )
    
   return {
