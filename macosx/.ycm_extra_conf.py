@@ -56,11 +56,17 @@ compile_flags_dict = {
     '-fexceptions',
     '-DNDEBUG',
     '-isystem',
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.0/include',
-    '-isystem',
     '/usr/include',
     '-isystem',
     '/usr/local/include',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include'
+    '-isystem',
+    '/System/Library/Frameworks',
+    '-isystem',
+    '/Library/Frameworks',
 ],
 'extension(.c|.cc)':[ #list tuple or dict
     '-std=gnu99',
@@ -72,7 +78,7 @@ compile_flags_dict = {
     '-x',
     'c++',
     '-isystem',
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',#c++11
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/c++/v1',
     ],
 'command':#str tuple, list
     [
@@ -93,7 +99,8 @@ def compile_flags_parser(compile_item, fileextension):
             if f:
                 for line in f.readlines():
                 #if there is space in the path may cause some problem, but most file with no space
-                    cmdstr.extend(line.strip('\n').split(' ')) 
+                    cmdstr.extend([ cmd if i == 0 else '-'+ cmd \
+                        for i, cmd in enumerate(line.strip(' \n').split(' -'))])
                 f.close()
         return cmdstr
 

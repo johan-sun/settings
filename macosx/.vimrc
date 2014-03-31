@@ -10,7 +10,7 @@ call vundle#rc()
 " 使用Vundle管理插件
 Bundle 'gmarik/vundle'
 " 接下来是安装的插件
-Bundle 'taglist.vim'
+Bundle 'syhkiller/taglist.vim'
 Bundle 'a.vim'
 Bundle 'code_complete'
 Bundle 'Valloric/YouCompleteMe' 
@@ -114,7 +114,7 @@ let g:syntastic_warning_symbol = '⚠'
 let g:syntastic_always_populate_location_list = 1
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_mode_map = {'passive_filetypes' : ['c','cpp']}
-
+let g:syntastic_cpp_compiler = '-std=c++11'
 "----------------YouCompleteMe-----------
 let g:ycm_key_invoke_completion = '<A-Space>'
 let g:ycm_confirm_extra_conf = 0
@@ -139,9 +139,22 @@ let g:ConqueTerm_StartMessages = 0
 "----------statusline-------------------
 set laststatus=2
 set statusline=%<%F%m%r%w\ fmt=%{&ff}:%{&fenc!=''?&fenc:&enc},type=%Y,ascii=\%b(\%B)%=%v,%l\ of\ %L\ %P
-
+au FileType taglist,vundle setlocal statusline=%F
 
 "-------------IndentLine--------------------
 let g:indentLine_char = '┊'
 
-let g:syntastic_cpp_compiler = '-std=c++11'
+map <leader><leader>c :cs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>d :cs d c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>e :cs e c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>f :cs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>g :cs g c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>s :cs s c <C-R>=expand("<cword>")<CR><CR>
+
+map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sd :scs d c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>se :scs e c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sf :scs f c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>sg :scs g c <C-R>=expand("<cword>")<CR><CR>
+map <leader><leader>ss :scs s c <C-R>=expand("<cword>")<CR><CR>
+map <C-D> :Dash <C-R>=expand("<cword>")<CR><CR>
