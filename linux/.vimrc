@@ -34,9 +34,12 @@ set nu
 set cindent
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set smartindent
 set expandtab
 set fileencodings=utf8,gbk
+set ignorecase
+set backspace=start,eol,indent
 autocmd FileType python,cmake set nocindent
 autocmd FileType make set noexpandtab
 "-----------end basic config of vim------------
