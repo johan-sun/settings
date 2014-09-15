@@ -1,0 +1,4 @@
+Bundle 'Conque-Shell'
+Bundle 'code_complete'
+Bundle 'rizzatti/dash.vim'
+Bundle 'Yggdroot/indentLine'

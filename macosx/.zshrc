@@ -1,8 +1,7 @@
 #env vars
 
-export HOMEBREW_EDITOR=vim
+export HOMEBREW_EDITOR=mvim
 export PATH=/usr/local/bin:/usr/local/sbin:`echo $PATH | sed -E 's/\/usr\/local\/s?bin:?//'`
-#export PYTHONPATH=/usr/local/lib/python3.3/site-packages:/usr/local/lib/python2.7/site-packages:$PYTHONPATH
 
 #private env
 if [ -f $HOME/.private_env ]; then
@@ -12,6 +11,10 @@ fi
 #alias
 if [ -f $HOME/.cmd_aliases ]; then
 source $HOME/.cmd_aliases
+fi
+
+if [ -f $HOME/.bash_profile ]; then
+source $HOME/.bash_profile
 fi
 
 
