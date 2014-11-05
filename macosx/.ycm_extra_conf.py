@@ -60,7 +60,9 @@ compile_flags_dict = {
     '-isystem',
     '/usr/local/include',
     '-isystem',
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/5.1/include',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include',
     '-isystem',
     '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include'
     '-isystem',
@@ -222,7 +224,7 @@ def FlagsForFile( filename, **kwargs ):
     extension = os.path.splitext( filename )[ 1 ]
     raw_flags = compile_flags_parser(compile_flags_dict, extension)
     final_flags = MakeRelativePathsInFlagsAbsolute( raw_flags, relative_to )
-    
+
   return {
     'flags': final_flags,
     'do_cache': True
