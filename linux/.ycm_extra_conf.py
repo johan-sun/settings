@@ -57,8 +57,10 @@ compile_flags_dict = {
     '-fexceptions',
     '-DNDEBUG',
     #'-D__STRICT_ANSI__',
+    #'-I',
+    #'/usr/lib/clang/3.4/include',
     '-I',
-    '/usr/lib/clang/3.4/include',
+    '/usr/lib/jvm/java-1.7.0-openjdk-amd64/include',
     '-I',
     '/usr/local/include',
     '-I',
@@ -68,12 +70,12 @@ compile_flags_dict = {
     '-I',
     '.',
    ],
-'extension(.c|.cc)':[ #list tuple or dict
+'extension(.c)':[ #list tuple or dict
     '-std=gnu11',
     '-x',
     'c',
    ],
-'extension(.cpp|.cxx|.h|.hpp|.hh|.hxx)':[
+'extension(.cpp|.cc|.cxx|.h|.hpp|.hh|.hxx)':[
     '-std=gnu++11',
     '-x',
     'c++',
@@ -81,11 +83,17 @@ compile_flags_dict = {
     '/usr/include/c++/4.8',
     '-I',
     '/usr/include/c++/4.8/backward',
+    '-I',
+    '/usr/include/mysql',
+    '-I',
+    '/usr/include/mysql++',
     ],
 'command':#str tuple, list
     [
     #'python-config --cflags',
-    #'pkg-config --cflags gtk-3.0'
+    'pkg-config --cflags gtk+-3.0',
+    'pkg-config --cflags gio-2.0',
+    'pkg-config --cflags glib-2.0',
     #'pkg-config --cflags ncurses',
     ]
 
@@ -216,7 +224,7 @@ def FlagsForFile( filename, **kwargs ):
     relative_to = DirectoryOfThisScript()
     raw_flags = compile_flags_parser(compile_flags_dict, os.path.splitext(filename)[1])
     final_flags = MakeRelativePathsInFlagsAbsolute( raw_flags, relative_to )
-   
+
   return {
     'flags': final_flags,
     'do_cache': True

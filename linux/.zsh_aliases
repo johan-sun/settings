@@ -24,3 +24,5 @@ function  mkctags
 {
 	ctags -R -I __THROW -I __THROWNL -I __attribute_pure__ -I __nonnull -I __attribute__ --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --c++-kinds=+px --fields=+ialS --extra=+q --sort=yes $*
 }
+
+export STUDIO_JDK="$HOME/jdk1.8.0_25"
