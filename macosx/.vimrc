@@ -36,6 +36,7 @@
     Plugin 'spf13/vim-colors'
     Plugin 'majutsushi/tagbar'
     Plugin 'octol/vim-cpp-enhanced-highlight'
+    Plugin 'syhkiller/auto-include'
 
     filetype on "required 
 " }}}
@@ -49,16 +50,19 @@
     set softtabstop=4
     set smartindent
     set expandtab
-    set fileencodings=utf8,gbk
+    set fenc=utf-8
+    set fileencodings=ucs-bom,utf-8,cp936,gbk,Shift_JIS
     set ignorecase
     set backspace=indent,eol,start
     set foldmethod=marker
+    set hls
+    set nowrap
     au FileType python,cmake set nocindent
     au FileType make set noexpandtab
     au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0,1,1,0])
     au FileType c,cpp map<C-a> :A<CR>
     colorscheme desert
-    let mapleader=","
+    let mapleader="\\"
     syntax on
 " }}}
 " UI {{{
@@ -100,20 +104,21 @@
     map <F3> :tabnext <CR>
     imap <F2> <Esc>:tabprevious<CR>
     imap <F3> <Esc>:tabnext<CR>
+    nnoremap <CR> :noh<CR><CR>:<backspace>
 
-    map <leader><leader>c :cs f c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>d :cs d c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>e :cs e c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>f :cs f c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>g :cs g c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>s :cs s c <C-R>=expand("<cword>")<CR><CR>
-
-    map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>sd :scs d c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>se :scs e c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>sf :scs f c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>sg :scs g c <C-R>=expand("<cword>")<CR><CR>
-    map <leader><leader>ss :scs s c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>c :cs f c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>d :cs d c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>e :cs e c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>f :cs f c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>g :cs g c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>s :cs s c <C-R>=expand("<cword>")<CR><CR>
+"
+"    map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>sd :scs d c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>se :scs e c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>sf :scs f c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>sg :scs g c <C-R>=expand("<cword>")<CR><CR>
+"    map <leader><leader>ss :scs s c <C-R>=expand("<cword>")<CR><CR>
     map <C-D> :Dash <C-R>=expand("<cword>")<CR><CR>
     map <F6> :!mkctags . <CR>
     map <F7> :cs add . ../.<CR>
@@ -144,11 +149,16 @@
 " }}}
 " Youcompleteme {{{
     let g:ycm_key_invoke_completion = '<C-Space>'
+    let g:ycm_complete_in_comments=1
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+    let g:ycm_collect_identifiers_from_tags_files=1
+    inoremap <leader>; <C-x><C-o>
     let g:ycm_always_populate_location_list = 1
     let g:ycm_error_symbol = '✗'
     let g:ycm_warning_symbol = '⚠'
     let g:ycm_confirm_extra_conf = 0
+    let g:ycm_min_num_of_chars_for_completion=1
+    let g:ycm_cache_omnifunc=0
     let g:ycm_seed_identifiers_with_syntax = 1
     au FileType c,cpp map <C-\> :YcmCompleter GoToDefinitionElseDeclaration<CR>
     autocmd BufWrite * pclose
@@ -202,6 +212,10 @@
     let g:ConqueTerm_CloseOnEnd = 1
     let g:ConqueTerm_StartMessages = 0
     let g:ConqueTerm_TERM = 'dtterm'
+"}}}
+" code_complete {{{
+    let g:user_defined_snippets = '~/.vim/my_snippets/c_cpp.vim'
+
 "}}}
 " {{{
     let g:cpp_class_scope_highlight = 1

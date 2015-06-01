@@ -62,7 +62,7 @@ compile_flags_dict = {
     '-isystem',
     '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1',
     '-isystem',
-    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.0/include',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/6.1.0/include',
     '-isystem',
     '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include'
     '-isystem',
@@ -84,7 +84,7 @@ compile_flags_dict = {
     ],
 'command':#str tuple, list
     [
-    'python-config --cflags',
+    #'python-config --cflags',
     ]
 
 }
