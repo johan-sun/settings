@@ -11,7 +11,7 @@
     Plugin 'gmarik/vundle'
     " 接下来是安装的插件
     "taglist from vim-script
-    Plugin 'syhkiller/taglist.vim'
+    "Plugin 'syhkiller/taglist.vim'
     Plugin 'a.vim' 
     Plugin 'code_complete'
     Plugin 'scrooloose/syntastic'
@@ -33,7 +33,8 @@
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'spf13/vim-colors'
-    Plugin 'syhkiller/auto-include'
+    "Plugin 'syhkiller/auto-include'
+    Plugin 'bling/vim-airline'
 
     filetype on "required 
 " }}}

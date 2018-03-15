@@ -60,11 +60,9 @@ compile_flags_dict = {
     #'-I',
     #'/usr/lib/clang/3.4/include',
     '-I',
-    '/usr/lib/jvm/java-1.7.0-openjdk-amd64/include',
+    '/usr/bin/../lib64/gcc/x86_64-pc-linux-gnu/7.3.0/include'
     '-I',
     '/usr/local/include',
-    '-I',
-    '/usr/include/x86_64-linux-gnu',
     '-I',
     '/usr/include',
     '-I',
@@ -80,20 +78,14 @@ compile_flags_dict = {
     '-x',
     'c++',
     '-I',
-    '/usr/include/c++/4.8',
-    '-I',
-    '/usr/include/c++/4.8/backward',
-    '-I',
-    '/usr/include/mysql',
-    '-I',
-    '/usr/include/mysql++',
+    '/usr/include/c++/7.3.0',
     ],
 'command':#str tuple, list
     [
     #'python-config --cflags',
-    'pkg-config --cflags gtk+-3.0',
-    'pkg-config --cflags gio-2.0',
-    'pkg-config --cflags glib-2.0',
+    #'pkg-config --cflags gtk+-3.0',
+    #'pkg-config --cflags gio-2.0',
+    #'pkg-config --cflags glib-2.0',
     #'pkg-config --cflags ncurses',
     ]
 
@@ -125,7 +117,7 @@ def compile_flags_parser(compile_item, fileextension):
         flags = compile_item.get('flags', None)#make flags in the front
         if flags:
             retlist.extend(compile_flags_parser(flags, fileextension))
-        for key, it in compile_item.iteritems():
+        for key, it in compile_item.items():
             if key == 'flags':
                 continue
             elif key.startswith('extension'):
