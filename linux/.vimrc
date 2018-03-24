@@ -33,6 +33,7 @@
     Plugin 'Lokaltog/vim-easymotion'
     Plugin 'altercation/vim-colors-solarized'
     Plugin 'spf13/vim-colors'
+    Plugin 'majutsushi/tagbar'
     "Plugin 'syhkiller/auto-include'
     Plugin 'bling/vim-airline'
 
@@ -90,6 +91,29 @@
         set csto=0
         set cst
     endif
+    function Addcscope () 
+        cs add .
+        cs add ..
+        cs add ../..
+        cs add ../../..
+        cs add ../../../..
+    endfunc
+
+    au FileType c,cpp call Addcscope()
+    map <leader><leader>c :scs f c <C-R>=expand("<cword>")<CR><CR>
+    map <leader><leader>d :scs f d <C-R>=expand("<cword>")<CR><CR>
+    map <leader><leader>e :scs f e <C-R>=expand("<cword>")<CR><CR>
+    map <leader><leader>f :scs f f <C-R>=expand("<cword>")<CR><CR>
+    map <leader><leader>g :scs f g <C-R>=expand("<cword>")<CR><CR>
+    map <leader><leader>s :scs f s <C-R>=expand("<cword>")<CR><CR>
+
+    "map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
+    "map <leader><leader>sd :scs f d <C-R>=expand("<cword>")<CR><CR>
+    "map <leader><leader>se :scs f e <C-R>=expand("<cword>")<CR><CR>
+    "map <leader><leader>sf :scs f f <C-R>=expand("<cword>")<CR><CR>
+    "map <leader><leader>sg :scs f g <C-R>=expand("<cword>")<CR><CR>
+    "map <leader><leader>ss :scs f s <C-R>=expand("<cword>")<CR><CR>
+
 "}}}
 "key map {{{
     map <F2> :tabprevious <CR>
@@ -98,29 +122,20 @@
     imap <F3> <Esc>:tabnext<CR>
     nnoremap <cr> :noh<CR><CR>:<backspace>
 
-"    map <leader><leader>c :cs f c <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>d :cs f d <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>e :cs f e <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>f :cs f f <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>g :cs f g <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>s :cs f s <C-R>=expand("<cword>")<CR><CR>
-"
-"    map <leader><leader>sc :scs f c <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>sd :scs f d <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>se :scs f e <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>sf :scs f f <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>sg :scs f g <C-R>=expand("<cword>")<CR><CR>
-"    map <leader><leader>ss :scs f s <C-R>=expand("<cword>")<CR><CR>
 " }}}
-"taglist {{{
-    let g:Tlist_Exit_OnlyWindow=1 "自动退出
-    let g:Tlist_Auto_Update=1
-    let g:Tlist_Auto_Open=1 "自动打开
-    let g:Tlist_Use_Right_Window=1 "靠右
-    let g:Tlist_Sort_Type="name"
-    let g:Tlist_Process_File_Always=1
-    let g:Tlist_Auto_Highlight_Tag=1
-    let g:Tlist_Show_One_File = 1
+"tagbar {{{
+    "let g:Tlist_Exit_OnlyWindow=1 "自动退出
+    "let g:Tlist_Auto_Update=1
+    "let g:Tlist_Auto_Open=1 "自动打开
+    "let g:Tlist_Use_Right_Window=1 "靠右
+    "let g:Tlist_Sort_Type="name"
+    "let g:Tlist_Process_File_Always=1
+    "let g:Tlist_Auto_Highlight_Tag=1
+    "let g:Tlist_Show_One_File = 1
+    "let g:tagbar_autoclose = 1
+    let g:tagbar_width = 30
+    autocmd FileType * nested call tagbar#autoopen(0)
+    nmap <silent><leader>t :TagbarToggle<CR>
 " }}}
 " syntastic {{{
     let g:syntastic_error_symbol = '✗'
